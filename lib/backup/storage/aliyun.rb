@@ -4,7 +4,7 @@ require "base64"
 module Backup
   module Storage
     class Aliyun < Base
-      attr_accessor :bucket,:access_key_id,:access_key_secret,:aliyun_internal, :path
+      attr_accessor :bucket,:access_key_id,:access_key_secret,:aliyun_internal, :aliyun_area, :path
       
       def initialize(model, storage_id = nil, &block)
         super(model, storage_id)
@@ -22,8 +22,10 @@ module Backup
           :aliyun_access_id => self.access_key_id,
           :aliyun_access_key => self.access_key_secret, 
           :aliyun_bucket => self.bucket,
+          :aliyun_area => self.aliyun_area || 'cn-hangzhou',
           :aliyun_internal => self.aliyun_internal || false
         }
+        Logger.info "#{opts}"
         @connection = CarrierWave::Storage::Aliyun::Connection.new(opts)
       end
       
