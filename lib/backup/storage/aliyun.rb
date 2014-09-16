@@ -4,7 +4,9 @@ require "base64"
 module Backup
   module Storage
     class Aliyun < Base
-      attr_accessor :bucket,:access_key_id,:access_key_secret,:aliyun_internal, :aliyun_area, :content_type, :path
+      include Storage::Cycler
+
+      attr_accessor :bucket, :access_key_id, :access_key_secret, :aliyun_internal, :aliyun_area, :content_type, :path
 
       def initialize(model, storage_id = nil, &block)
         super(model, storage_id)
