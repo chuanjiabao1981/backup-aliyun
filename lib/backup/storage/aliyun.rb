@@ -25,7 +25,7 @@ module Backup
           :aliyun_area => self.aliyun_area || 'cn-hangzhou',
           :aliyun_internal => self.aliyun_internal || false,
         }
-        Logger.info "#{opts}"
+        # Logger.info "#{opts}"
         @connection = CarrierWave::Storage::Aliyun::Connection.new(opts)
       end
 
