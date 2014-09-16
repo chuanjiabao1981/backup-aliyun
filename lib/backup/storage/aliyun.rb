@@ -24,7 +24,6 @@ module Backup
           :aliyun_bucket => self.bucket,
           :aliyun_area => self.aliyun_area || 'cn-hangzhou',
           :aliyun_internal => self.aliyun_internal || false,
-          :content_type => self.content_type || "application/octet-stream"
         }
         Logger.info "#{opts}"
         @connection = CarrierWave::Storage::Aliyun::Connection.new(opts)
@@ -38,7 +37,7 @@ module Backup
           dest = File.join(remote_path, filename)
           Logger.info "#{storage_name} uploading '#{ dest }'..."
           File.open(src, 'r') do |file|
-            connection.put(dest, file)
+            connection.put(dest, file, options={:content_type => self.content_type || "application/octet-stream"})
           end
         end
       end
