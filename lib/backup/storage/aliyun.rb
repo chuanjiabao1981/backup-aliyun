@@ -27,7 +27,6 @@ module Backup
           :aliyun_area => self.aliyun_area || 'cn-hangzhou',
           :aliyun_internal => self.aliyun_internal || false,
         }
-        # Logger.info "#{opts}"
         @connection = CarrierWave::Storage::Aliyun::Connection.new(opts)
       end
 
@@ -45,7 +44,8 @@ module Backup
       end
 
       def remove!(package)
-        remote_path = remote_path_for(package)
+        # OSS的API不能直接删除非空目录，所以得要直接指定删除某个文件
+        remote_path = File.join(remote_path_for(package), , package.trigger + '.' + package.extension)
         Logger.info "#{storage_name} removing '#{remote_path}'..."
         connection.delete(remote_path)
       end
